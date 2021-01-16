@@ -1,6 +1,9 @@
-package client.gui;
+package client.gui.admin;
 
 import client.controller.UserController;
+import lib.dto.AdminDTO;
+import lib.dto.ClientDTO;
+import lib.dto.DriverDTO;
 import lib.dto.UserDTO;
 import lib.exception.EmailUsedException;
 import lib.exception.InvalidEmailException;
@@ -9,7 +12,7 @@ import lib.exception.WrongCredentialsException;
 
 import javax.swing.*;
 
-public class LoginFrame extends JFrame {
+public class LoginAdminFrame extends JFrame {
     private JPanel panel1;
     private JTextField emailField;
     private JPasswordField passwordField;
@@ -17,7 +20,7 @@ public class LoginFrame extends JFrame {
     private JButton signupButton;
     private JPanel contentPanel;
 
-    public LoginFrame(){
+    public LoginAdminFrame(){
         setSize(800, 600);
         setContentPane(contentPanel);
         setLocationRelativeTo(null);
@@ -25,7 +28,7 @@ public class LoginFrame extends JFrame {
 
         loginButton.addActionListener(ev ->{
 
-            UserDTO userDTO = new UserDTO(0,emailField.getText(), new String(passwordField.getPassword()));
+            UserDTO userDTO = new AdminDTO(0,emailField.getText(), new String(passwordField.getPassword()));
             try {
                 int id = UserController.getInstance().login(userDTO);
             } catch (WrongCredentialsException e) {
@@ -36,7 +39,7 @@ public class LoginFrame extends JFrame {
         });
 
         signupButton.addActionListener(ev ->{
-            UserDTO userDTO = new UserDTO(0, emailField.getText(), new String(passwordField.getPassword()));
+            UserDTO userDTO = new AdminDTO(0, emailField.getText(), new String(passwordField.getPassword()));// todo should be deleted
             try {
                 int  id = UserController.getInstance().signup(userDTO);
             } catch (EmailUsedException e) {

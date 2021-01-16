@@ -3,4 +3,5 @@ module lib {
     exports lib.service;
     exports lib.dto;
     exports lib.exception;
+    exports lib.enumModel;
 }

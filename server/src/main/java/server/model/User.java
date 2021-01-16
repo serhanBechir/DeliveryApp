@@ -1,16 +1,10 @@
 package server.model;
 
-
-
-
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.*;
 
-@Entity
-@NamedQueries({
-        @NamedQuery(name = "User.findByEmail", query = "Select u from User u where u.email = :email")
-})
-public class User {
+@MappedSuperclass
+public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -20,6 +14,7 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
 
     public int getId() {
         return id;
@@ -44,6 +39,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -13,9 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Optional;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 public class UserServiceImpl extends UnicastRemoteObject implements UserService {
 
@@ -27,7 +25,7 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
     }
     @Override
     public int login(UserDTO userDTO) throws RemoteException {
-        Optional<User> userOptional = userRepo.findUserByEmail(userDTO.getEmail());
+        Optional<? extends User> userOptional = userRepo.findUserByEmail(userDTO.getEmail(), userDTO.getClass());
         return userOptional
                 .filter(user -> user.getPassword().equals(userDTO.getPassword()))
                 .map(User::getId)
@@ -44,7 +42,7 @@ public class UserServiceImpl extends UnicastRemoteObject implements UserService 
             throw  new InvalidPasswordException();
         }
 
-        Optional<User> userOptional = userRepo.findUserByEmail(userDTO.getEmail());
+        Optional<? extends User> userOptional = userRepo.findUserByEmail(userDTO.getEmail(), userDTO.getClass());
         if(userOptional.isEmpty()){
            return userRepo.createUser(userDTO).getId();
         } else{
