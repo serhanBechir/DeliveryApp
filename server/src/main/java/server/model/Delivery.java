@@ -4,7 +4,6 @@ import lib.enumModel.DeliveryStatus;
 import lib.enumModel.DeliveryType;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -14,15 +13,10 @@ public class Delivery {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn
+    @ManyToOne
+    @JoinColumn(name = "recipient_address_info")
     @Basic(fetch = FetchType.LAZY, optional = false)
-    private Party sender;
-
-    @ManyToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn
-    @Basic(fetch = FetchType.LAZY, optional = false)
-    private Party recipient;
+    private InfoDelivery infoDelivery;
 
 
     @Column(nullable = false)
@@ -32,7 +26,7 @@ public class Delivery {
     private DeliveryStatus status = DeliveryStatus.CREATED;
 
     @Enumerated(value = EnumType.STRING)
-    private DeliveryType type;
+    private DeliveryType type = DeliveryType.PICKUP;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -44,6 +38,21 @@ public class Delivery {
     @Basic(fetch = FetchType.LAZY, optional = true)
     private Driver driver;
 
+    public InfoDelivery getInfoDelivery() {
+        return infoDelivery;
+    }
+
+    public void setInfoDelivery(InfoDelivery infoDelivery) {
+        this.infoDelivery = infoDelivery;
+    }
+
+    public DeliveryType getType() {
+        return type;
+    }
+
+    public void setType(DeliveryType type) {
+        this.type = type;
+    }
 
     public int getId() {
         return id;
@@ -69,21 +78,6 @@ public class Delivery {
         this.driver = driver;
     }
 
-    public Party getSender() {
-        return sender;
-    }
-
-    public void setSender(Party sender) {
-        this.sender = sender;
-    }
-
-    public Party getRecipient() {
-        return recipient;
-    }
-
-    public void setRecipient(Party recipient) {
-        this.recipient = recipient;
-    }
 
     public LocalDateTime getTimestamp() {
         return timestamp;
@@ -112,5 +106,17 @@ public class Delivery {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Delivery{" +
+                "id=" + id +
+                ", timestamp=" + timestamp +
+                ", status=" + status +
+                ", type=" + type +
+                ", client=" + client +
+                ", driver=" + driver +
+                '}';
     }
 }

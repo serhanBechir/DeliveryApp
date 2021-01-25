@@ -2,41 +2,46 @@ package lib.dto;
 
 import lib.enumModel.DeliveryStatus;
 
-import java.security.Timestamp;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class DeliveryDTO {
+public class DeliveryDTO implements Serializable {
     private int id;
-    private PartyDTO sender;
-    private PartyDTO recipient;
-    private Timestamp timestamp;
+    private AddressDTO addressDTO;
+    private RecipientDTO recipientDTO;
+    private LocalDateTime timestamp;
     private DeliveryStatus status;
-    private UserDTO creatorUser;
-    private UserDTO driverUser;
 
-    public DeliveryDTO(int id, PartyDTO sender, PartyDTO recipient, Timestamp timestamp, DeliveryStatus status, UserDTO creatorUser, UserDTO driverUser) {
+    private int clientId;
+    private int driverId;
+
+
+    public DeliveryDTO(int id, AddressDTO addressDTO, RecipientDTO recipientDTO, LocalDateTime timestamp, DeliveryStatus status, int clientId, int driverId) {
         this.id = id;
-        this.sender = sender;
-        this.recipient = recipient;
+        this.addressDTO = addressDTO;
+        this.recipientDTO = recipientDTO;
+
+
         this.timestamp = timestamp;
         this.status = status;
-        this.creatorUser = creatorUser;
-        this.driverUser = driverUser;
+        this.clientId = clientId;
+        this.driverId = driverId;
     }
+    public DeliveryDTO(int id, AddressDTO addressDTO, RecipientDTO recipientDTO, LocalDateTime timestamp, DeliveryStatus status){
+        this.id = id;
+        this.addressDTO = addressDTO;
+        this.recipientDTO = recipientDTO;
+        this.timestamp = timestamp;
+        this.status = status;
+    }
+
 
     public int getId() {
         return id;
     }
 
-    public PartyDTO getSender() {
-        return sender;
-    }
-
-    public PartyDTO getRecipient() {
-        return recipient;
-    }
-
-    public Timestamp getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
@@ -44,12 +49,20 @@ public class DeliveryDTO {
         return status;
     }
 
-    public UserDTO getCreatorUser() {
-        return creatorUser;
+    public int getClientId() {
+        return clientId;
     }
 
-    public UserDTO getDriverUser() {
-        return driverUser;
+    public int getDriverId() {
+        return driverId;
+    }
+
+    public AddressDTO getAddressDTO() {
+        return addressDTO;
+    }
+
+    public RecipientDTO getRecipientDTO() {
+        return recipientDTO;
     }
 
     @Override

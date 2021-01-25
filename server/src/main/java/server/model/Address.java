@@ -1,9 +1,11 @@
 package server.model;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
+@NamedQueries(@NamedQuery(name = "Address.findByDetails", query = "select a from Address a where a.street = :street and a.streetNumber = :streetNumber and a.city = :city and" +
+        " a.zipCode = :zipCode and a.country = :country and a.additionalInfo = :additionalInfo"))
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,12 +21,31 @@ public class Address {
     private String city;
 
     @Column(nullable = false)
+    private String zipCode;
+
+    @Column(nullable = false)
     private String country;
 
     private String additionalInfo;
 
+    @OneToMany(mappedBy = "address")
+    private List<InfoDelivery> infoDeliveries = new ArrayList<>();
+
+    public void addInfoDelivery(InfoDelivery infoDelivery){
+        infoDeliveries.add(infoDelivery);
+        infoDelivery.setAddress(this);
+    }
+
     public int getId() {
         return id;
+    }
+
+    public List<InfoDelivery> getInfoDeliveries() {
+        return infoDeliveries;
+    }
+
+    public void setInfoDeliveries(List<InfoDelivery> infoDeliveries) {
+        this.infoDeliveries = infoDeliveries;
     }
 
     public void setId(int id) {
@@ -55,6 +76,14 @@ public class Address {
         this.city = city;
     }
 
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
     public String getCountry() {
         return country;
     }
@@ -71,6 +100,10 @@ public class Address {
         this.additionalInfo = additionalInfo;
     }
 
+
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,5 +115,19 @@ public class Address {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", street='" + street + '\'' +
+                ", streetNumber=" + streetNumber +
+                ", city='" + city + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", country='" + country + '\'' +
+                ", additionalInfo='" + additionalInfo + '\'' +
+
+                '}';
     }
 }

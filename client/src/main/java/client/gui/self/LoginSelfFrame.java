@@ -1,6 +1,7 @@
 package client.gui.self;
 
 import client.controller.UserController;
+import lib.dto.AddressDTO;
 import lib.dto.ClientDTO;
 import lib.dto.UserDTO;
 import lib.exception.EmailUsedException;
@@ -9,6 +10,7 @@ import lib.exception.InvalidPasswordException;
 import lib.exception.WrongCredentialsException;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class LoginSelfFrame extends JFrame {
     private JTextField emailField;
@@ -25,15 +27,19 @@ public class LoginSelfFrame extends JFrame {
 
 
         loginButton.addActionListener(ev ->{
+            new DashBoard(1);
 
-            UserDTO userDTO = new ClientDTO(0,emailField.getText(), new String(passField.getPassword()));
+           /* UserDTO userDTO = new ClientDTO(0,emailField.getText(), new String(passField.getPassword()));
             try {
                 int id = UserController.getInstance().login(userDTO);
+                new DashBoard(id);
             } catch (WrongCredentialsException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Email or Password wrong");
                 passField.setText("");
             }
+
+            */
         });
 
         signupButton.addActionListener(ev ->{

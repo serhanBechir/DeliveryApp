@@ -11,7 +11,7 @@ import java.util.List;
 public class Client extends User{
 
 
-    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -36,8 +36,12 @@ public class Client extends User{
 
     public void addDelivery(Delivery d){
         this.deliveryList.add(d);
+        d.setClient(this);
     }
     public void removeDelivery(Delivery d){
         this.deliveryList.remove(d);
     }
+
+
+
 }

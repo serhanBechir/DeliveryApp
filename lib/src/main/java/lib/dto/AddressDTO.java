@@ -1,20 +1,29 @@
 package lib.dto;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class AddressDTO {
+public class AddressDTO implements Serializable {
     private int id;
     private String street;
     private int streetNumber;
     private String city;
+    private String zipCode;
     private String country;
     private String additionalInfo;
 
-    public AddressDTO(int id, String street, int streetNumber, String city, String country, String additionalInfo) {
+    public AddressDTO(){
+
+    }
+
+
+
+    public AddressDTO(int id, String street, int streetNumber, String city, String zipCode, String country, String additionalInfo) {
         this.id = id;
         this.street = street;
         this.streetNumber = streetNumber;
         this.city = city;
+        this.zipCode = zipCode;
         this.country = country;
         this.additionalInfo = additionalInfo;
     }
@@ -33,6 +42,10 @@ public class AddressDTO {
 
     public String getCity() {
         return city;
+    }
+
+    public String getZipCode() {
+        return zipCode;
     }
 
     public String getCountry() {

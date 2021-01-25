@@ -24,14 +24,14 @@ public class UserRepo {
         User u;
         if(userDTO instanceof ClientDTO){
             u = new Client();
+            u.setEmail(userDTO.getEmail());
+            u.setPassword(userDTO.getPassword());
+
         }else {
             u = new Driver();
+            u.setEmail(userDTO.getEmail());
+            u.setPassword(userDTO.getPassword());
         }
-
-        u.setEmail(userDTO.getEmail());
-        u.setPassword(userDTO.getPassword());
-
-
 
         entityManager.getTransaction().begin();
         entityManager.persist(u);
