@@ -1,6 +1,7 @@
 package client.gui;
 
 import client.gui.admin.LoginAdminFrame;
+import client.gui.driver.LoginDriver;
 import client.gui.self.LoginSelfFrame;
 
 import javax.swing.*;
@@ -8,7 +9,7 @@ import javax.swing.*;
 public class StartFrame extends JFrame {
     private JButton adminButton;
     private JButton selfClientButton;
-    private JButton DRIVERButton;
+    private JButton driver;
     private JPanel contentPanel;
 
     public StartFrame(){
@@ -24,6 +25,11 @@ public class StartFrame extends JFrame {
 
         selfClientButton.addActionListener(ev -> {
             new LoginSelfFrame();
+            dispose();
+        });
+
+        driver.addActionListener(ev -> {
+            new LoginDriver();
             dispose();
         });
     }

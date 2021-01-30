@@ -26,9 +26,14 @@ public class Delivery {
     private DeliveryStatus status = DeliveryStatus.CREATED;
 
     @Enumerated(value = EnumType.STRING)
-    private DeliveryType type = DeliveryType.PICKUP;
+    private DeliveryType type;
 
     @ManyToOne
+    @JoinColumn(name = "hub_id")
+    @Basic(fetch = FetchType.LAZY, optional = false)
+    private Hub hub;
+
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "client_id")
     @Basic(fetch = FetchType.LAZY, optional = false)
     private Client client;
@@ -93,6 +98,14 @@ public class Delivery {
 
     public void setStatus(DeliveryStatus status) {
         this.status = status;
+    }
+
+    public Hub getHub() {
+        return hub;
+    }
+
+    public void setHub(Hub hub) {
+        this.hub = hub;
     }
 
     @Override

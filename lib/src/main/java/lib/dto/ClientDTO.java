@@ -1,5 +1,7 @@
 package lib.dto;
 
+import lib.enumModel.Plan;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ public class ClientDTO implements UserDTO, Serializable {
     private String email;
     private String password;
     private AddressDTO addressDTO;
+
    // private List<DriverDTO> deliveryList = new ArrayList<>();
 
 

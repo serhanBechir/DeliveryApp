@@ -1,6 +1,7 @@
 package server.service;
 
 import lib.dto.AddressDTO;
+import lib.enumModel.Plan;
 import lib.exception.ClientAddressEmptyException;
 import lib.service.ClientService;
 import server.model.Address;
@@ -50,5 +51,10 @@ public class ClientServiceImpl extends UnicastRemoteObject implements ClientServ
             return address.getStreet() + " " + address.getStreetNumber() + ", " + address.getCity() + ", " + address.getZipCode() + ", " +address.getCountry();
         }
         throw new ClientAddressEmptyException();
+    }
+
+    @Override
+    public void updatePlanByClientId(int clientId, Plan plan) throws RemoteException {
+        clientRepo.updatePlanByClientId(clientId, plan);
     }
 }

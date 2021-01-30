@@ -18,7 +18,7 @@ public class UserController {
     private UserController(){
 
         try {
-            Registry registry = LocateRegistry.getRegistry("localhost", 4545);
+            Registry registry = LocateRegistry.getRegistry("localhost", 4546);
             userService = (UserService) registry.lookup("userService");
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();

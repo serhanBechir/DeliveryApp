@@ -1,6 +1,7 @@
 package server.repo;
 
 
+import lib.enumModel.Plan;
 import server.model.Address;
 import server.model.Client;
 
@@ -37,5 +38,12 @@ public class ClientRepo {
 
     public Optional<Address> getClientAddress(int clientId){
         return Optional.of(em.getReference(Client.class, clientId).getAddress());
+    }
+
+    public void updatePlanByClientId(int clientId, Plan plan) {
+        Client c = em.find(Client.class, clientId);
+        em.getTransaction().begin();
+        c.setPlan(plan);
+        em.getTransaction().commit();
     }
 }

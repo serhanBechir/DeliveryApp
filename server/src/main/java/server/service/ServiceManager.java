@@ -1,5 +1,6 @@
 package server.service;
 
+import lib.service.CardService;
 import lib.service.ClientService;
 import lib.service.DeliveryService;
 import lib.service.UserService;
@@ -19,6 +20,7 @@ public class ServiceManager {
         serviceRegistry.put(UserService.class, new UserServiceImpl(emf));
         serviceRegistry.put(DeliveryService.class, new DeliveryServiceImpl(emf));
         serviceRegistry.put(ClientService.class, new ClientServiceImpl(emf));
+        serviceRegistry.put(CardService.class, new CardServiceImpl(emf));
     }
 
     public static ServiceManager getInstance() throws RemoteException {

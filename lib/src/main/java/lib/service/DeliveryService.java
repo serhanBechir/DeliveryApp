@@ -2,10 +2,13 @@ package lib.service;
 
 import lib.dto.DeliveryDTO;
 import lib.dto.DeliveryDetailDTO;
+import lib.enumModel.DeliveryStatus;
+import lib.enumModel.DeliveryType;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Map;
 
 public interface DeliveryService extends Remote {
 
@@ -16,4 +19,8 @@ public interface DeliveryService extends Remote {
     DeliveryDetailDTO getDeliveryExtraDetailsById(int id) throws RemoteException;
 
     boolean deleteDeliveryById(int id) throws RemoteException;
+    List<DeliveryDetailDTO> getDeliveryListByDriverAndType(int id, DeliveryType type) throws RemoteException;
+
+    void changeDeliveryStatusById(int deliveryId, DeliveryStatus status) throws  RemoteException;
+    void changeDeliveryTypeById(int deliveryId, DeliveryType type) throws  RemoteException;
 }

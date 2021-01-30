@@ -13,7 +13,7 @@ public class Driver extends User{
 
     private String carNumber;
 
-    @OneToMany(mappedBy = "driver")
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.REFRESH)
     private List<Delivery> deliveryList = new ArrayList<>();
 
 
@@ -25,8 +25,10 @@ public class Driver extends User{
         this.deliveryList = deliveryList;
     }
 
-    public void addDelivery(Delivery d){
-        this.deliveryList.add(d);
+    public void addDelivery(Delivery d)
+    {
+        deliveryList.add(d);
+        d.setDriver(this);
     }
     public void removeDelivery(Delivery d){
         this.deliveryList.remove(d);

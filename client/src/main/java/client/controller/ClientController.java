@@ -1,6 +1,7 @@
 package client.controller;
 
 import lib.dto.AddressDTO;
+import lib.enumModel.Plan;
 import lib.service.ClientService;
 
 import java.rmi.NotBoundException;
@@ -12,13 +13,14 @@ public class ClientController {
 
     private ClientService clientService;
 
+
     public static final class SingletonHolder{
         public static final ClientController INSTANCE = new ClientController();
     }
 
     private ClientController(){
         try {
-            Registry registry = LocateRegistry.getRegistry("localhost", 4545);
+            Registry registry = LocateRegistry.getRegistry("localhost", 4546);
             clientService = (ClientService) registry.lookup("clientService");
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
@@ -44,6 +46,15 @@ public class ClientController {
     public String getClientAddress(int clientId) {
         try {
            return clientService.getClientAddress(clientId);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
+
+    public void updatePlanByClientId(int clientId, Plan plan) {
+        try {
+            clientService.updatePlanByClientId(clientId, plan);
         } catch (RemoteException e) {
             e.printStackTrace();
             throw new RuntimeException();

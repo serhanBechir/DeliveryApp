@@ -1,6 +1,7 @@
 package lib.dto;
 
 import lib.enumModel.DeliveryStatus;
+import lib.enumModel.DeliveryType;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,7 +12,17 @@ public class DeliveryDetailDTO implements Serializable {
     private LocalDateTime timestamp;
     private String recipientPhone;
     private String Address;
+    private DeliveryType type;
     private DeliveryStatus status;
+
+    public DeliveryDetailDTO(int id, String recipientName, String recipientPhone, String address, DeliveryType type, DeliveryStatus status) {
+        this.id = id;
+        this.recipientName = recipientName;
+        this.recipientPhone = recipientPhone;
+        Address = address;
+        this.type = type;
+        this.status = status;
+    }
 
     public DeliveryDetailDTO(int id, String recipientName, LocalDateTime timestamp) {
         this.id = id;
@@ -48,4 +59,9 @@ public class DeliveryDetailDTO implements Serializable {
     public String getAddress() {
         return Address;
     }
+
+    public DeliveryType getType() {
+        return type;
+    }
 }
+

@@ -1,5 +1,6 @@
 package server;
 
+import lib.service.CardService;
 import lib.service.ClientService;
 import lib.service.DeliveryService;
 import lib.service.UserService;
@@ -12,9 +13,10 @@ import java.rmi.registry.Registry;
 
 public class MainServer {
     public static void main(String[] args) throws RemoteException {
-        Registry registry = LocateRegistry.createRegistry(4545);
+        Registry registry = LocateRegistry.createRegistry(4546);
         registry.rebind("userService", ServiceManager.getInstance().get(UserService.class));
         registry.rebind("deliveryService", ServiceManager.getInstance().get(DeliveryService.class));
         registry.rebind("clientService", ServiceManager.getInstance().get(ClientService.class));
+        registry.rebind("cardService", ServiceManager.getInstance().get(CardService.class));
     }
 }

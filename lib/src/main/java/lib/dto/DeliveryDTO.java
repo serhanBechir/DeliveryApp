@@ -1,6 +1,7 @@
 package lib.dto;
 
 import lib.enumModel.DeliveryStatus;
+import lib.enumModel.DeliveryType;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -13,11 +14,14 @@ public class DeliveryDTO implements Serializable {
     private LocalDateTime timestamp;
     private DeliveryStatus status;
 
+    private DeliveryType deliveryType;
+
+    private int zoneCode;
     private int clientId;
     private int driverId;
 
 
-    public DeliveryDTO(int id, AddressDTO addressDTO, RecipientDTO recipientDTO, LocalDateTime timestamp, DeliveryStatus status, int clientId, int driverId) {
+    public DeliveryDTO(int id, AddressDTO addressDTO, RecipientDTO recipientDTO, LocalDateTime timestamp, DeliveryStatus status, DeliveryType deliveryType, int zoneCode, int clientId, int driverId) {
         this.id = id;
         this.addressDTO = addressDTO;
         this.recipientDTO = recipientDTO;
@@ -25,6 +29,8 @@ public class DeliveryDTO implements Serializable {
 
         this.timestamp = timestamp;
         this.status = status;
+        this.deliveryType = deliveryType;
+        this.zoneCode = zoneCode;
         this.clientId = clientId;
         this.driverId = driverId;
     }
@@ -49,6 +55,10 @@ public class DeliveryDTO implements Serializable {
         return status;
     }
 
+    public int getZoneCode() {
+        return zoneCode;
+    }
+
     public int getClientId() {
         return clientId;
     }
@@ -64,6 +74,10 @@ public class DeliveryDTO implements Serializable {
     public RecipientDTO getRecipientDTO() {
         return recipientDTO;
     }
+    public DeliveryType getDeliveryType() {
+        return deliveryType;
+    }
+
 
     @Override
     public boolean equals(Object o) {

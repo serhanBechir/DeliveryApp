@@ -29,10 +29,16 @@ public class DeliveryRepo {
     public Delivery createDelivery(DeliveryDTO deliveryDTO){
         Delivery delivery = new Delivery();
         delivery.setTimestamp(deliveryDTO.getTimestamp());
+        delivery.setType(deliveryDTO.getDeliveryType());
 
 
         Client c = em.find(Client.class, deliveryDTO.getClientId());
         c.addDelivery(delivery);
+
+        TypedQuery<Hub> query = em.createQuery("select h from Hub h where h.zoneCode = :zoneCode", Hub.class);
+        query.setParameter("zoneCode", deliveryDTO.getZoneCode());
+        Hub h = query.getSingleResult();
+        h.addDelivery(delivery);
 
         Recipient recipient;
         Address address;
@@ -136,15 +142,7 @@ public class DeliveryRepo {
 
     }
 
-   /* public List<Delivery> getDeliveryListByClientId(int id){
-        TypedQuery<Delivery> query= em.createQuery("select d from Delivery d where d.client.id = :id order by d.timestamp desc", Delivery.class);
-        query.setParameter("id", id);
 
-        return query.getResultList();
-
-    }
-
-    */
     public List<DeliveryDetailDTO> getDeliveryListByClientId(int id){
        TypedQuery<DeliveryDetailDTO> query= em.createQuery("select new lib.dto.DeliveryDetailDTO(d.id, d.infoDelivery.recipient.name, d.timestamp) " +
                 "from Delivery d, InfoDelivery i, Recipient r where d.infoDelivery = i and i.recipient = r and d.client.id = :id " +
@@ -154,6 +152,32 @@ public class DeliveryRepo {
 
     }
 
+    public List<Delivery> getDeliveryListByDriverId(int id){
+        TypedQuery<Driver> query = em.createQuery("select d from Driver d where d.id = :id", Driver.class);
+        query.setParameter("id", id);
+        Driver d = query.getSingleResult();
+        //em.refresh(d.getDeliveryList());
+        return d.getDeliveryList();
+
+    }
+    public List<DeliveryDetailDTO> getDeliveryListByDriverAndType(int driverId, DeliveryType deliveryType){
+        String sql = "";
+        if(deliveryType == DeliveryType.PICKUP){
+            sql = "select new lib.dto.DeliveryDetailDTO(d.id, d.client.name, d.client.phone, concat(a.street, ' ', a.streetNumber, ', '," +
+                    " a.city, ', ', a.zipCode, ', ', a.country, ' ', a.additionalInfo), d.type, d.status) from Delivery d, Driver dr, Client c, Address a " +
+                    "where d.driver = dr and d.client = c and c.address = a and dr.id = :id and d.type = :type order by d.status desc";
+        }else{
+            sql = "select new lib.dto.DeliveryDetailDTO(d.id, d.infoDelivery.recipient.name, d.infoDelivery.recipient.phone, concat(a.street, ' ', a.streetNumber, ', '," +
+                    " a.city, ', ', a.zipCode, ', ', a.country, ' ', a.additionalInfo), d.type, d.status) from Delivery d, Driver dr, InfoDelivery i, Address a, Recipient r " +
+                    "where d.driver = dr and d.infoDelivery = i and i.address = a and i.recipient = r and dr.id = :id and d.type = :type order by d.status ";
+        }
+        TypedQuery<DeliveryDetailDTO> query = em.createQuery(sql,DeliveryDetailDTO.class);
+        query.setParameter("id", driverId);
+        query.setParameter("type", deliveryType);
+
+        return query.getResultList();
+    }
+
     public DeliveryDetailDTO getDeliveryExtraDetailsById(int id) {
         TypedQuery<DeliveryDetailDTO> query= em.createQuery("select new lib.dto.DeliveryDetailDTO(d.infoDelivery.recipient.phone, concat(a.street, ' ', a.streetNumber, ', '," +
                 " a.city, ', ', a.zipCode, ', ', a.country, ', ', a.additionalInfo), d.status) " +
@@ -161,6 +185,7 @@ public class DeliveryRepo {
         query.setParameter("id", id);
         return query.getSingleResult();
     }
+
 
     public boolean deleteDeliveryById(int deliveryId){
         Delivery delivery = em.find(Delivery.class, deliveryId);
@@ -172,5 +197,20 @@ public class DeliveryRepo {
             return true;
 
         }else return false;
+    }
+
+    public void changeDeliveryStatusById(int deliveryId, DeliveryStatus status) {
+        Delivery delivery = em.find(Delivery.class, deliveryId);
+
+        em.getTransaction().begin();
+        delivery.setStatus(status);
+        em.getTransaction().commit();
+    }
+    public void changeDeliveryTypeById(int deliveryId, DeliveryType type) {
+        Delivery delivery = em.find(Delivery.class, deliveryId);
+
+        em.getTransaction().begin();
+        delivery.setType(type);
+        em.getTransaction().commit();
     }
 }

@@ -1,6 +1,8 @@
 package server.service;
 
 import lib.dto.*;
+import lib.enumModel.DeliveryStatus;
+import lib.enumModel.DeliveryType;
 import lib.service.DeliveryService;
 import server.repo.DeliveryRepo;
 
@@ -8,6 +10,8 @@ import javax.persistence.EntityManagerFactory;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class DeliveryServiceImpl extends UnicastRemoteObject implements DeliveryService {
     private DeliveryRepo deliveryRepo;
@@ -23,18 +27,7 @@ public class DeliveryServiceImpl extends UnicastRemoteObject implements Delivery
     @Override
     public List<DeliveryDetailDTO> getDeliveryListByClientId(int id) throws RemoteException {
         return deliveryRepo.getDeliveryListByClientId(id);
-        /*return deliveryRepo.getDeliveryListByClientId(id).stream()
-                .map(delivery -> {
-                    AddressDTO addressDTO = new AddressDTO(delivery.getInfoDelivery().getAddress().getId(), delivery.getInfoDelivery().getAddress().getStreet(),
-                            delivery.getInfoDelivery().getAddress().getStreetNumber(), delivery.getInfoDelivery().getAddress().getCity(), delivery.getInfoDelivery().getAddress().getZipCode(),
-                            delivery.getInfoDelivery().getAddress().getCountry(), delivery.getInfoDelivery().getAddress().getAdditionalInfo());
-                    RecipientDTO recipientDTO = new RecipientDTO(delivery.getInfoDelivery().getRecipient().getId(), delivery.getInfoDelivery().getRecipient().getName(),
-                            delivery.getInfoDelivery().getRecipient().getPhone());
 
-                    return new DeliveryDTO(delivery.getId(),addressDTO, recipientDTO, delivery.getTimestamp(),delivery.getStatus());})
-                .collect(Collectors.toList());
-
-         */
     }
 
     @Override
@@ -46,4 +39,22 @@ public class DeliveryServiceImpl extends UnicastRemoteObject implements Delivery
     public boolean deleteDeliveryById(int deliveryId) throws RemoteException {
         return deliveryRepo.deleteDeliveryById(deliveryId);
     }
+
+    @Override
+    public List<DeliveryDetailDTO> getDeliveryListByDriverAndType(int id, DeliveryType type) throws RemoteException {
+        return deliveryRepo.getDeliveryListByDriverAndType(id, type);
+
+    }
+
+    @Override
+    public void changeDeliveryStatusById(int deliveryId, DeliveryStatus status) throws RemoteException {
+        deliveryRepo.changeDeliveryStatusById(deliveryId, status);
+    }
+
+    @Override
+    public void changeDeliveryTypeById(int deliveryId, DeliveryType type) throws RemoteException {
+        deliveryRepo.changeDeliveryTypeById(deliveryId, type);
+    }
+
+
 }
