@@ -11,12 +11,15 @@ public class StartFrame extends JFrame {
     private JButton selfClientButton;
     private JButton driver;
     private JPanel contentPanel;
+    private JPanel buttonPanel;
+    private JLabel iconLabel;
 
     public StartFrame(){
-        setSize(400,500);
+        setSize(600,550);
         setContentPane(contentPanel);
         setLocationRelativeTo(null);
         setVisible(true);
+        iconLabel.setIcon(new ImageIcon("./client/src/main/resources/icons/startPage.png"));
 
         adminButton.addActionListener(ev -> {
             new LoginAdminFrame();
