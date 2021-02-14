@@ -15,7 +15,6 @@ public class CardPanel extends RoundPanel {
     DashBoard dashBoard;
     private final Color blue= new Color(0, 158, 224);
 
-
     public CardPanel(CardDTO cardDTO, DashBoard dashBoard) {
         this.cardDTO = cardDTO;
         this.dashBoard = dashBoard;

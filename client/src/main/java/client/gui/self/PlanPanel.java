@@ -23,6 +23,8 @@ public class PlanPanel extends RoundPanel {
     private JPanel topPanel;
     private JLabel choseLabel;
     private JLabel titleLabel;
+    private JLabel detail1;
+    private JLabel detail2;
 
 
     public PlanPanel(String title, Plan plan, DashBoard dashBoard){
@@ -72,6 +74,42 @@ public class PlanPanel extends RoundPanel {
         centerPanel = new JPanel();
         centerPanel.setOpaque(false);
         centerPanel.setBorder(BorderFactory.createMatteBorder(0,0,1,0,grey));
+        centerPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 20,5));
+        centerPanel.add(Box.createRigidArea(new Dimension(450,20)));
+
+       // centerPanel.setAlignmentX(LEFT_ALIGNMENT);
+
+        detail1 = new JLabel();
+        detail1.setFont(new Font("Segoe UI", Font.PLAIN,15));
+        detail1.setPreferredSize(new Dimension(350, 20));
+        detail1.setForeground(Color.LIGHT_GRAY);
+        detail2 = new JLabel();
+        detail2.setFont(new Font("Segoe UI", Font.PLAIN,15));
+        detail2.setPreferredSize(new Dimension(350, 20));
+        detail2.setForeground(Color.lightGray);
+
+        switch (plan){
+            case LIGHT:
+                detail1.setText("100 deliveries/month max 1kg");
+                detail2.setText("2 EUR for each extra kg");
+                break;
+            case MEDIUM:
+                detail1.setText("150 deliveries/month max 3kg");
+                detail2.setText("1 EUR for each extra kg");
+                break;
+            case HEAVY:
+                detail1.setText("50 deliveries/month max 10kg");
+                detail2.setText("0.5 EUR for each extra kg");
+                break;
+            case EXTRA_HEAVY:
+                detail1.setText("50 deliveries/month max 20kg");
+                detail2.setText("0.5 EUR for each extra kg");
+                break;
+            default:
+                break;
+        }
+        centerPanel.add(detail1);
+        centerPanel.add(detail2);
 
     }
 
@@ -85,9 +123,9 @@ public class PlanPanel extends RoundPanel {
     }
 
     public void selectPlan(){
-        centerPanel.setOpaque(true);
         dashBoard.getChangePlanPanel().setVisible(true);
-        centerPanel.setBackground(blue);
+        detail1.setForeground(Color.BLACK);
+        detail2.setForeground(Color.BLACK);
         choseLabel.setText("Selected");
         titleLabel.setIcon(new ImageIcon("./client/src/main/resources/icons/checked20.png"));
         isSelected = true;
@@ -95,8 +133,8 @@ public class PlanPanel extends RoundPanel {
 
     public void unselectPlan(){
 
-        centerPanel.setBackground(null);
-        centerPanel.setOpaque(false);
+        detail1.setForeground(Color.lightGray);
+        detail2.setForeground(Color.lightGray);
         choseLabel.setText("Choose Plan");
         titleLabel.setIcon(null);
         isSelected = false;

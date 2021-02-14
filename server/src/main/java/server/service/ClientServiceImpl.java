@@ -47,14 +47,21 @@ public class ClientServiceImpl extends UnicastRemoteObject implements ClientServ
     public String getClientAddress(int id) throws RemoteException {
         Optional<Address> addressOptional = clientRepo.getClientAddress(id);
         if(addressOptional.isPresent()){
+
             Address address = addressOptional.get();
             return address.getStreet() + " " + address.getStreetNumber() + ", " + address.getCity() + ", " + address.getZipCode() + ", " +address.getCountry();
         }
+
         throw new ClientAddressEmptyException();
     }
 
     @Override
     public void updatePlanByClientId(int clientId, Plan plan) throws RemoteException {
         clientRepo.updatePlanByClientId(clientId, plan);
+    }
+
+    @Override
+    public Plan getPlanByClientId(int clientId) throws RemoteException {
+        return clientRepo.getPlanByClientId(clientId);
     }
 }

@@ -50,7 +50,7 @@ public class DriverDeliveryPanel extends JPanel {
             phoneLabel.setForeground(Color.GRAY);
 
             changeStatusButton = new JButton();
-            changeStatusButton.setPreferredSize(new Dimension(105,30));
+            changeStatusButton.setPreferredSize(new Dimension(110,30));
             changeStatusButton.setFont(new Font("Segoe UI", Font.BOLD,14));
             changeStatusButton.setFocusPainted(false);
             changeStatusButton.setBackground(blue);
@@ -115,6 +115,7 @@ public class DriverDeliveryPanel extends JPanel {
                 changeStatusButton.setText("Delivered?");
                 changeStatusButton.addActionListener(ev -> {
                     DeliveryController.getInstance().changeDeliveryStatusById(deliveryDetailDTO.getId(), DeliveryStatus.DELIVERED);
+                    DeliveryController.getInstance().changeDeliveryTypeById(deliveryDetailDTO.getId(), DeliveryType.CLOSED);
                     parentDashboard.initAndRefreshFinalDeliveryPanel();
                 });
                 break;

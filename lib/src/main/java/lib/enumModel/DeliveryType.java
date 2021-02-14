@@ -2,5 +2,6 @@ package lib.enumModel;
 
 public enum DeliveryType {
     PICKUP,
-    DELIVER
+    DELIVER,
+    CLOSED
 }

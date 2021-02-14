@@ -180,7 +180,7 @@ public class DeliveryRepo {
 
     public DeliveryDetailDTO getDeliveryExtraDetailsById(int id) {
         TypedQuery<DeliveryDetailDTO> query= em.createQuery("select new lib.dto.DeliveryDetailDTO(d.infoDelivery.recipient.phone, concat(a.street, ' ', a.streetNumber, ', '," +
-                " a.city, ', ', a.zipCode, ', ', a.country, ', ', a.additionalInfo), d.status) " +
+                " a.city, ', ', a.zipCode, ', ', a.country, ' ', a.additionalInfo), d.status) " +
                 "from Delivery d, InfoDelivery i, Recipient r, Address a where d.infoDelivery = i and i.recipient = r and i.address = a and d.id = :id ", DeliveryDetailDTO.class);
         query.setParameter("id", id);
         return query.getSingleResult();

@@ -14,6 +14,8 @@ public class ClientController {
     private ClientService clientService;
 
 
+
+
     public static final class SingletonHolder{
         public static final ClientController INSTANCE = new ClientController();
     }
@@ -56,6 +58,15 @@ public class ClientController {
         try {
             clientService.updatePlanByClientId(clientId, plan);
         } catch (RemoteException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
+
+    public Plan getPlanByClientId(int clientId) {
+        try {
+             return clientService.getPlanByClientId(clientId);
+        }catch (RemoteException e){
             e.printStackTrace();
             throw new RuntimeException();
         }

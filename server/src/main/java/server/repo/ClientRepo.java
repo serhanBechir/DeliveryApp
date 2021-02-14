@@ -37,7 +37,7 @@ public class ClientRepo {
     }
 
     public Optional<Address> getClientAddress(int clientId){
-        return Optional.of(em.getReference(Client.class, clientId).getAddress());
+        return Optional.ofNullable(em.find(Client.class, clientId).getAddress());
     }
 
     public void updatePlanByClientId(int clientId, Plan plan) {
@@ -45,5 +45,10 @@ public class ClientRepo {
         em.getTransaction().begin();
         c.setPlan(plan);
         em.getTransaction().commit();
+    }
+
+    public Plan getPlanByClientId(int clientId) {
+        Client c = em.getReference(Client.class, clientId);
+        return c.getPlan();
     }
 }
