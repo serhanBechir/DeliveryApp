@@ -47,6 +47,11 @@ public class DeliveryServiceImpl extends UnicastRemoteObject implements Delivery
     }
 
     @Override
+    public List<DeliveryDetailDTO> getActiveDeliveryListByHubId(int hubId) throws RemoteException {
+        return deliveryRepo.getActiveDeliveryListByHubId(hubId);
+    }
+
+    @Override
     public void changeDeliveryStatusById(int deliveryId, DeliveryStatus status) throws RemoteException {
         deliveryRepo.changeDeliveryStatusById(deliveryId, status);
     }
@@ -54,6 +59,7 @@ public class DeliveryServiceImpl extends UnicastRemoteObject implements Delivery
     @Override
     public void changeDeliveryTypeById(int deliveryId, DeliveryType type) throws RemoteException {
         deliveryRepo.changeDeliveryTypeById(deliveryId, type);
+
     }
 
 

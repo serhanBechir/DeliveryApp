@@ -19,8 +19,12 @@ public interface DeliveryService extends Remote {
     DeliveryDetailDTO getDeliveryExtraDetailsById(int id) throws RemoteException;
 
     boolean deleteDeliveryById(int id) throws RemoteException;
+
     List<DeliveryDetailDTO> getDeliveryListByDriverAndType(int id, DeliveryType type) throws RemoteException;
 
+    List<DeliveryDetailDTO> getActiveDeliveryListByHubId(int hubId) throws RemoteException;
+
     void changeDeliveryStatusById(int deliveryId, DeliveryStatus status) throws  RemoteException;
+
     void changeDeliveryTypeById(int deliveryId, DeliveryType type) throws  RemoteException;
 }

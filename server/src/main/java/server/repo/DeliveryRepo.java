@@ -7,6 +7,7 @@ import lib.enumModel.DeliveryType;
 import server.model.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -212,5 +213,21 @@ public class DeliveryRepo {
         em.getTransaction().begin();
         delivery.setType(type);
         em.getTransaction().commit();
+    }
+
+    public List<DeliveryDetailDTO> getActiveDeliveryListByHubId(int hubId) {//todo review
+        try {
+            String sql = "select new lib.dto.DeliveryDetailDTO(d.id, d.client.name, r.name, d.timestamp, concat(d.client.address.street, ' ', d.client.address.streetNumber, ', ', " +
+                    "d.client.address.city, ', ', d.client.address.zipCode, ', ', d.client.address.country, ' ', d.client.address.additionalInfo), concat(a.street, ' ', a.streetNumber, ', ', " +
+                    "a.city, ', ', a.zipCode, ', ', a.country, ' ', a.additionalInfo), dr.id, dr.name, d.status) from Delivery d LEFT  JOIN d.driver dr,  InfoDelivery i, Address a, Recipient r,  Hub h " +
+                    "where  d.infoDelivery = i and i.address = a and i.recipient = r  and  d.hub = h and h.id =:id and d.status != :status order by d.timestamp ";
+            TypedQuery<DeliveryDetailDTO> query = em.createQuery(sql, DeliveryDetailDTO.class);
+            query.setParameter("status", DeliveryStatus.DELIVERED);
+            query.setParameter("id", hubId);
+            return query.getResultList();
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
     }
 }

@@ -94,6 +94,14 @@ public class DeliveryController {
             throw new RuntimeException();
         }
     }
+    public List<DeliveryDetailDTO> getActiveDeliveryListByHubId(int hubId){
+        try {
+           return deliveryService.getActiveDeliveryListByHubId(hubId);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
 }
 
 

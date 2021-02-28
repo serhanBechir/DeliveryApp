@@ -11,16 +11,35 @@ public class DeliveryDetailDTO implements Serializable {
     private String recipientName;
     private LocalDateTime timestamp;
     private String recipientPhone;
-    private String Address;
+    private String recipientAddress;
     private DeliveryType type;
     private DeliveryStatus status;
 
-    public DeliveryDetailDTO(int id, String recipientName, String recipientPhone, String address, DeliveryType type, DeliveryStatus status) {
+    private String clientName;
+    private String clientAddress;
+    private Integer driverId;
+    private String driverName;
+
+    public DeliveryDetailDTO(int id, String recipientName, String recipientPhone, String recipientAddress, DeliveryType type, DeliveryStatus status) {
         this.id = id;
         this.recipientName = recipientName;
         this.recipientPhone = recipientPhone;
-        Address = address;
+        this.recipientAddress = recipientAddress;
         this.type = type;
+        this.status = status;
+    }
+
+    public DeliveryDetailDTO(int id, String clientName, String recipientName, LocalDateTime timestamp, String clientAddress, String recipientAddress,
+                             Integer driverId, String driverName, DeliveryStatus status) {
+        this.id = id;
+        this.clientName = clientName;
+        this.recipientName = recipientName;
+        this.timestamp = timestamp;
+        this.clientAddress = clientAddress;
+        this.recipientAddress = recipientAddress;
+
+        this.driverId = driverId;
+        this.driverName = driverName;
         this.status = status;
     }
 
@@ -30,9 +49,9 @@ public class DeliveryDetailDTO implements Serializable {
         this.timestamp = timestamp;
     }
 
-    public DeliveryDetailDTO(String recipientPhone, String address, DeliveryStatus status) {
+    public DeliveryDetailDTO(String recipientPhone, String recipientAddress, DeliveryStatus status) {
         this.recipientPhone = recipientPhone;
-        Address = address;
+        this.recipientAddress = recipientAddress;
         this.status = status;
     }
 
@@ -56,12 +75,28 @@ public class DeliveryDetailDTO implements Serializable {
         return recipientPhone;
     }
 
-    public String getAddress() {
-        return Address;
+    public String getRecipientAddress() {
+        return recipientAddress;
     }
 
     public DeliveryType getType() {
         return type;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public String getClientAddress() {
+        return clientAddress;
+    }
+
+    public Integer getDriverId() {
+        return driverId;
+    }
+
+    public String getDriverName() {
+        return driverName;
     }
 }
 

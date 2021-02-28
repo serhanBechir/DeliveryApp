@@ -3,12 +3,14 @@ package client.gui.self;
 import client.controller.CardController;
 import client.controller.ClientController;
 import client.controller.DeliveryController;
+import client.gui.util.ClearErrorFocusListener;
 import client.gui.util.RoundPanel;
 import lib.dto.*;
 import lib.enumModel.CardType;
 import lib.enumModel.DeliveryType;
 import lib.enumModel.Plan;
 import lib.exception.ClientAddressEmptyException;
+
 import org.cef.CefApp;
 import org.cef.CefClient;
 import org.cef.OS;
@@ -853,24 +855,6 @@ public class DashBoard extends JFrame {
 
     }
 
-    private class ClearErrorFocusListener implements FocusListener{
 
-        private JLabel errorLabel;
-
-        ClearErrorFocusListener(JLabel errorLabel){
-            this.errorLabel = errorLabel;
-
-        }
-
-        @Override
-        public void focusGained(FocusEvent e) {
-            errorLabel.setText("");
-        }
-
-        @Override
-        public void focusLost(FocusEvent e) {
-
-        }
-    }
 
 }

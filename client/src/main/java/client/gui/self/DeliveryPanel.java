@@ -69,7 +69,7 @@ public class DeliveryPanel extends JPanel {
             moreDetailsLabel.setText("Less Details");
             moreDetailsLabel.setIcon(new ImageIcon("./client/src/main/resources/icons/collapse20.png"));
             deliveryExtraDetailDTO = DeliveryController.getInstance().getDeliveryExtraDetailsById(deliveryDetailDTO.getId());
-            addressStreetLabel.setText(deliveryExtraDetailDTO.getAddress());
+            addressStreetLabel.setText(deliveryExtraDetailDTO.getRecipientAddress());
             recipientPhoneLabel.setText(deliveryExtraDetailDTO.getRecipientPhone());
 
             hiddenPanel.setVisible(true);

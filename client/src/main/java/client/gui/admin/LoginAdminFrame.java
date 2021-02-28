@@ -1,9 +1,8 @@
 package client.gui.admin;
 
 import client.controller.UserController;
+import client.gui.util.ClearErrorFocusListener;
 import lib.dto.AdminDTO;
-import lib.dto.ClientDTO;
-import lib.dto.DriverDTO;
 import lib.dto.UserDTO;
 import lib.exception.EmailUsedException;
 import lib.exception.InvalidEmailException;
@@ -11,34 +10,62 @@ import lib.exception.InvalidPasswordException;
 import lib.exception.WrongCredentialsException;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class LoginAdminFrame extends JFrame {
-    private JPanel panel1;
+    private JPanel contentPanel;
     private JTextField emailField;
     private JPasswordField passwordField;
     private JButton loginButton;
     private JButton signupButton;
-    private JPanel contentPanel;
+    private JPanel logoPanel;
+    private JPanel loginPanel;
+    private JLabel logoLabel;
+    private JLabel userLabel;
+    private JLabel passLabel;
+    private JLabel errorLabel;
+
+    private int adminId;
 
     public LoginAdminFrame(){
-        setSize(800, 600);
+        setSize(1300, 600);
         setContentPane(contentPanel);
         setLocationRelativeTo(null);
         setVisible(true);
+
+        JLabel backgroundLabel = new JLabel();
+        backgroundLabel.setIcon(new ImageIcon("./client/src/main/resources/icons/background.png"));
+        logoPanel.add(backgroundLabel, BorderLayout.CENTER);
+
+        logoLabel.setIcon(new ImageIcon("./client/src/main/resources/icons/logoBox120.png"));
+
+        userLabel.setIcon(new ImageIcon("./client/src/main/resources/icons/user25.png"));
+        passLabel.setIcon(new ImageIcon("./client/src/main/resources/icons/password25.png"));
+        emailField.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.lightGray));
+        passwordField.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.lightGray));
+
+        emailField.addFocusListener(new ClearErrorFocusListener(errorLabel));
+        passwordField.addFocusListener(new ClearErrorFocusListener(errorLabel));
+
+
 
         loginButton.addActionListener(ev ->{
 
             UserDTO userDTO = new AdminDTO(0,emailField.getText(), new String(passwordField.getPassword()));
             try {
-                int id = UserController.getInstance().login(userDTO);
+                //adminId = UserController.getInstance().login(userDTO);
+                adminId = 1;
+                new AdminDashboard(adminId);
+
             } catch (WrongCredentialsException e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Email or Password wrong");
-                passwordField.setText("");
+                errorLabel.setText("Email or Password wrong");
+                errorLabel.setVisible(true);
+
             }
         });
 
-        signupButton.addActionListener(ev ->{
+        /*signupButton.addActionListener(ev ->{
             UserDTO userDTO = new AdminDTO(0, emailField.getText(), new String(passwordField.getPassword()));// todo should be deleted
             try {
                 int  id = UserController.getInstance().signup(userDTO);
@@ -60,6 +87,9 @@ public class LoginAdminFrame extends JFrame {
                 passwordField.setText("");
             }
         });
+
+         */
     }
+
 
 }

@@ -1,7 +1,6 @@
 package client.gui.driver;
 
 import client.controller.DeliveryController;
-import client.gui.self.DashBoard;
 import lib.dto.DeliveryDetailDTO;
 import lib.enumModel.DeliveryStatus;
 import lib.enumModel.DeliveryType;
@@ -71,7 +70,7 @@ public class DriverDeliveryPanel extends JPanel {
             addressPanel.setBackground(Color.white);
             addressPanel.setBorder(BorderFactory.createMatteBorder(0,0,1,0,Color.lightGray));
 
-            JLabel addressLabel = new JLabel(deliveryDetailDTO.getAddress());
+            JLabel addressLabel = new JLabel(deliveryDetailDTO.getRecipientAddress());
             addressLabel.setFont(new Font("Segoe UI", Font.BOLD,13));
             addressLabel.setVerticalTextPosition(SwingConstants.BOTTOM);
             addressLabel.setPreferredSize(new Dimension(350,25));
